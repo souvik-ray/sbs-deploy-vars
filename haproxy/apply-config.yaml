@@ -1,0 +1,9 @@
+---
+- hosts: hostList
+  vars_files: 
+    - vars/settings-default.yml
+  tasks:
+    - name: Configure haproxy
+      template: src=src/haproxy.cfg dest=/etc/haproxy/haproxy.cfg
+      sudo: yes
+      sudo_user: root

@@ -1,0 +1,9 @@
+---
+- hosts: hostList
+  vars_files: 
+    - vars/settings-default.yml
+  tasks:
+    - name: Configure keepalived
+      template: src=src/keepalived.conf dest=/etc/keepalived/keepalived.conf
+      sudo: yes
+      sudo_user: root
