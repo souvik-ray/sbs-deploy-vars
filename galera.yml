@@ -1,0 +1,3 @@
+mysql_master_host: {host: 'host1', ip: '192.120.120.121'}
+mysql_backup_host: [{host: 'host2', ip: '192.120.120.122'}, {host: 'host3', ip: '192.120.120.123'}]
+mysql_host: {host: 'host1', ip: '192.120.120.121'}
