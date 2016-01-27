@@ -1,0 +1,12 @@
+---
+- hosts: hostList
+  tasks:
+    - name: Ensure haproxy is installed
+      apt: name=haproxy state=installed
+      sudo: yes
+    - name: Enable haproxy
+      lineinfile: dest=/etc/default/haproxy state=present regexp='^ENABLED\=' line='ENABLED=1'
+      sudo: yes
+    - name: Set defaults in haproxy
+      command: update-rc.d haproxy defaults
+      sudo: yes

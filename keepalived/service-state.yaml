@@ -1,0 +1,6 @@
+---
+- hosts: hostList
+  tasks:
+    - name: Service keepalived
+      service: name=keepalived state={{ operation }}
+      sudo: yes

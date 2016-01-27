@@ -1,0 +1,20 @@
+1. For deploying haproxy, modify "./inventory" file to specify the hosts as per your requirements. For example, I have added a host as 54.201.178.145 with its key.
+
+2. Deploy haproxy
+   -- use deploy-package.yaml playlist which executes the following steps on host node:
+	1)sudo apt-get install haproxy
+	2)set "ENABLED=1" in /etc/default/haproxy
+        3)sudo update-rc.d haproxy defaults
+   -- Commands used to run this play-list
+	ansible-playbook -v deploy-package.yaml -i inventory -u ubuntu
+
+3. Deploy and apply config
+  	ansible-playbook -v apply-config.yaml -i inventory -u ubuntu
+  
+4. Service start/stop.
+   -- I have created service-state.yaml playlist to start/stop/status/restart haproxy service, in this we have to define the operation as started/stopped/restarted/status:
+
+	ansible-playbook -v service-state.yaml -i inventory -u ubuntu -e operation=started
+	ansible-playbook -v service-state.yaml -i inventory -u ubuntu -e operation=stopped
+	ansible-playbook -v service-state.yaml -i inventory -u ubuntu -e operation=restarted
+	ansible-playbook -v service-state.yaml -i inventory -u ubuntu -e operation=status
