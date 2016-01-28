@@ -4,5 +4,5 @@
     - vars/settings-default.yml
   tasks:
     - name: Copy mysql conf
-      template: src=my.cnf dest=/etc/mysql/my.cnf
+      template: src=src/my.cnf dest=/etc/mysql/my.cnf
       become: yes
