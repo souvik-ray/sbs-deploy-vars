@@ -2,7 +2,7 @@ For deploying galera, add "./inventory" file to specify the hosts as per your re
 
 1. Disable AppArmor
    -- use disableAppArmor.yml playlist which executes the following steps on host node:
-	1)ln -s /etc/apparmor.d/usr /etc/apparmor.d/disable/.sbin.mysqld
+	1)ln -s {/etc/apparmor.d,/etc/apparmor.d/disable}/usr.sbin.mysqld
         2)sudo service  apparmor restart
    -- Commands used to run this play-list
 	ansible-playbook -v disableAppArmor.yaml -i inventory -u ubuntu
