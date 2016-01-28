@@ -1,0 +1,11 @@
+---
+- hosts: hostName
+  tasks:
+    - name: Disable AppArmor
+      command: ln -s {/etc/apparmor.d,/etc/apparmor.d/disable}/usr.sbin.mysqld
+      become: yes
+      ignore_errors: yes
+    - name: Restart AppArmor
+      service: name=apparmor state=restarted
+      become: yes
+
