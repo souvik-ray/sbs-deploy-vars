@@ -1,5 +1,5 @@
 ---
-- hosts: host
+- hosts: hostList
   vars_files:
     - vars/settings-default.yml
   tasks:

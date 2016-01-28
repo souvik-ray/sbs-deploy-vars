@@ -1,16 +1,57 @@
-- hosts: hostName
+---
+- hosts: hostList
   tasks:
-  - include: apt_get_update.yaml
-  - name: Install apt packages
-    apt:
-      pkg: "{{ item }}"
-      state: latest
-      force: yes
-    register: install_packages
-    until: install_packages|success
-    sudo: yes
-    with_items:
-     - galera-3
-     - galera-arbitrator-3
-     - mysql-wsrep-5.6
-     - python-mysqldb
+    - name: Disable AppArmor
+      command: ln -s {/etc/apparmor.d,/etc/apparmor.d/disable}/usr.sbin.mysqld
+      become: yes
+      ignore_errors: yes
+    - name: Restart AppArmor
+      service: name=apparmor state=restarted
+      become: yes
+    - name: Ensure software-properties is installed
+      apt: name=software-properties-common state=installed
+      become: yes
+    - name: Add the GnuPG key
+      command: apt-key adv --keyserver keyserver.ubuntu.com --recv BC19DDBA
+      become: yes
+    - name: Create galera.list file
+      file: path=/etc/apt/sources.list.d/galera.list state=touch
+      become: yes
+    - name: Add codership to galera list
+      lineinfile: dest=/etc/apt/sources.list.d/galera.list state=present line="deb http://releases.galeracluster.com/ubuntu trusty main"
+      become: yes
+    - name: Update apt sources
+      apt:
+        update_cache: yes
+        cache_valid_time: 600
+      register: apt_update
+      until: apt_update|success
+      become: yes
+    - name: Install apt packages
+      apt:
+        pkg: "{{ item }}"
+        state: latest
+        force: yes
+      register: install_packages
+      until: install_packages|success
+      sudo: yes
+      with_items:
+       - galera-3
+       - galera-arbitrator-3
+       - mysql-wsrep-5.6
+       - python-mysqldb
+    - name: Create empty swap file
+      command: fallocate -l 512M /swapfile
+      become: yes
+    - name: Secure swap file
+      command: chmod 600 /swapfile
+      become: yes
+    - name: Format swap file
+      command: mkswap /swapfile
+      become: yes
+    - name: activate swap file
+      command: swapon /swapfile
+      become: yes
+    - name: Include swap file
+      lineinfile: dest=/etc/fstab state=present line="/swapfile none swap defaults 0 0"
+      become: yes
