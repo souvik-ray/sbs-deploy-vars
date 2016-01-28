@@ -1,4 +1,4 @@
-For deploying haproxy, modify "./inventory.sample" file to specify the hosts as per your requirements. For example, I have added a host as 54.201.178.145 with its key.
+For deploying galera, add "./inventory" file to specify the hosts as per your requirements. For example, I have added a host as 54.201.178.145 with its key.
 
 1. Disable AppArmor
    -- use disableAppArmor.yml playlist which executes the following steps on host node:
