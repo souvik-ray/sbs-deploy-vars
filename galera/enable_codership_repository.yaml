@@ -1,0 +1,15 @@
+---
+- hosts: hostName
+  tasks:
+    - name: Ensure software-properties is installed
+      apt: name=software-properties-common state=installed
+      become: yes
+    - name: Add the GnuPG key
+      command: apt-key adv --keyserver keyserver.ubuntu.com --recv BC19DDBA
+      become: yes
+    - name: Create galera.list file
+      file: path=/etc/apt/sources.list.d/galera.list state=touch
+      become: yes
+    - name: Add codership to galera list
+      lineinfile: dest=/etc/apt/sources.list.d/galera.list state=present line="deb http://releases.galeracluster.com/ubuntu trusty main"
+      become: yes
