@@ -1,6 +1,6 @@
 ---
-- hosts: hostName
+- hosts: hostList
   tasks:
     - name: Service mysql
-      service: name=mysql state={{ operation }} args={{extra_arg}}
+      service: name=mysql state={{ operation }} args={{ extra_arg }}
       become: yes
