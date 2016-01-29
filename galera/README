@@ -1,17 +1,13 @@
 For deploying galera, add "./inventory" file to specify the hosts as per your requirements. For example, I have added a host as 54.201.178.145 with its key.
 
-1. Deploy package which includes install galera-3, galera-arbitrator-3, mysql-wsrep-5.6, and python-mysqldb
+1. Deploy package includes the following steps:
    a) Disable AppArmor
-   -- use disableAppArmor.yml playlist which executes the following steps on host node:
-	1)ln -s {/etc/apparmor.d,/etc/apparmor.d/disable}/usr.sbin.mysqld
-        2)sudo service  apparmor restart
-   -- Commands used to run this play-list
-	ansible-playbook -v disableAppArmor.yaml -i inventory -u ubuntu
-	ansible-playbook  -v deploy_package.yaml -i inventory -u ubuntu
    b) Enable Codership repository
-  	ansible-playbook -v enable_codership_repository.yaml -i inventory -u ubuntu
-   c) Configure swap space
-   	ansible-playbook  -v configure_swap_space.yaml -i inventory -u ubuntu
+   c) Install galera-3, galera-arbitrator-3, mysql-wsrep-5.6, and python-mysqldb
+   d) Configure swap space
+
+   -- Commands used to run this play-list
+	ansible-playbook  -v deploy_package.yaml -i inventory -u ubuntu
 
 2. Apply configuration
         ansible-playbook  -v apply_config.yaml -i inventory -u ubuntu
