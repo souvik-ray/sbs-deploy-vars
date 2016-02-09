@@ -1,0 +1,9 @@
+---
+- hosts: admin
+  vars_files:
+    - vars/settings-default.yml
+  tasks:
+    - name: Install ceph on ceph nodes
+      command: ceph-deploy install {{item.hostname}}
+      with_items: "{{mons + osds}}"
+

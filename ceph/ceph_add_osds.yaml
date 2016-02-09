@@ -1,0 +1,21 @@
+---
+- hosts: admin
+  vars_files:
+    - vars/osd_info.yml
+    - vars/settings-default.yml
+  tasks:
+    - name: Disk list 
+      shell: ceph-deploy disk list {{item.hostname}}
+      with_items: osd_hosts
+      args:
+       chdir: "{{ceph_dir}}"
+    - name: Prepare osd
+      shell: ceph-deploy osd prepare {{item.hostname}}:{{item.dev}}
+      with_items: osd_hosts
+      args:
+       chdir: "{{ceph_dir}}"
+    - name: Activate osd
+      shell: ceph-deploy osd activate "{{item.hostname}}:{{item.dev}}1"
+      with_items: osd_hosts
+      args:
+       chdir: "{{ceph_dir}}"

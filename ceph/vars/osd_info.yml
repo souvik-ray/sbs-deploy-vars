@@ -1,0 +1,6 @@
+osd_hosts: [{hostname: 'ip-172-31-30-141', dev: '/dev/xvdb'}, {hostname: 'ip-172-31-24-69', dev: '/dev/xvdc'}]
+#osd_hosts:
+#  - hostname: 'ip-172-31-5-176'
+#    dev: '/dev/xvd{d..z}'
+#  - hostname: 'ip-172-31-5-176'
+#    dev: '/dev/xvde'

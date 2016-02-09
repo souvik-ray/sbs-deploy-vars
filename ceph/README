@@ -1,0 +1,49 @@
+Scripts for ceph-deploy automations are described below, please modify "./inventory" file to specify the admin,monitor,osds as per your requirements. For example, I have added admin host with its private key.
+
+We can set export ANSIBLE_HOST_KEY_CHECKING=false where we will run ansible so that it will be able to do SSH without any prompt.
+
+1. add_ceph_admin.yaml
+   - It will add the Admin node of ceph.
+   - it uses vars/settings_default.yml to get admin.(ip/host), IdentityFile and ceph_deb_version.
+
+	ansible-playbook -v add_ceph_admin.yaml -i inventory -u ubuntu
+
+2. configure_ceph_node.yaml
+   - it will be used to add other ceph nodes like monitors or osd nodes.
+   - it uses vars/node_varfile.yml to get host ip,hostname,user,idfile(as defined in host variable) and for this host node, we need to define a command line host name as mentioned in inventory file i.e. inventory host name is the same host as defined in variable file
+
+   I used this playbook to create a monitor, 2 osd nodes as follows, but specify the hostname and node_varfile.yml accordingly:
+	ansible-playbook -v configure_ceph_node.yaml -i inventory -u ubuntu -e hostname=mon
+	ansible-playbook -v configure_ceph_node.yaml -i inventory -u ubuntu -e hostname=osd1
+	ansible-playbook -v configure_ceph_node.yaml -i inventory -u ubuntu -e hostname=osd2
+
+   We may also need to do proxy or ntp settings on these nodes using add_proxy_settings.yaml and add_ntp_settings.yaml playbooks.
+
+3. install_ceph.yaml
+   - it installs ceph on the hosts(mons and osds nodes) specified in vars/settings_default.yml file.
+
+	ansible-playbook -v install_ceph.yaml -i inventory -u ubuntu 
+
+4. ceph_create_initial.yaml
+   - It does the monitor initial steps
+	ansible-playbook -v ceph_create_initial.yaml -i inventory -u ubuntu 
+
+5. ceph_add_osds.yaml
+
+   Before running this playbook, we should check the disk in osd nodes which we can use for osd prepare/activate. We can check this manually and add the required devices in vars/osd_info.yml.
+       - ceph-deploy disk list <hostname> //do this on admin node e.g. ceph-deploy disk list <monitor_host_name>
+
+   After populating osd_info.yml, we can run ceph_add_osds.yaml to prepare and activate the required osds.
+
+Supporting playbooks:
+1. purge_cluster.yaml:
+   -- If at any point, you run into trouble and you want to start over, execute the following to purge the configuration:
+      ceph-deploy purgedata {ceph-node} [{ceph-node}]
+      ceph-deploy forgetkeys
+      ceph-deploy purge {ceph-node} [{ceph-node}]
+
+2. add_proxy_settings.yaml or add_ntp_settings.yaml
+   -- To add proxy/ntp settings in nodes(mons/osds), we can do it separately on each node or all nodes by specifying hostname( and the required nodes in inventory file for hostname)
+   -- It uses the proxy_ip and proxy port as specified in vars/proxy_info.yml 
+   	ansible-playbook -v add_proxy_settings.yaml -i inventory -u ubuntu -e hostname=nodes
+       	ansible-playbook -v add_ntp_settings.yaml -i inventory -u ubuntu -e hostname=mon

@@ -1,0 +1,33 @@
+---
+### add_proxy_settings.yaml playbook is used to add proxy settings in nodes osds/mons so that they will be able to talk to the network
+      ### all these tasks adds or update proxy entry with new ip or port as specified in vars/proxy_info.yml
+      ### specify the required hosts in inventory file and command line
+      ### e.g. ansible-playbook -v add_proxy_settings.yaml -i inventory -u ubuntu -e hostname=hosts
+      ### and in inventory file we have following hosts
+      ###    [hosts]
+      ###    54.213.167.213 ansible_ssh_private_key_file=~/sandeep_key.pem
+      ###    54.191.166.115 ansible_ssh_private_key_file=~/sandeep_key.pem
+
+- hosts: "{{hostname}}"
+  vars_files:
+    - vars/proxy_info.yml
+  tasks:
+    - name: Add proxy entry https in node
+      lineinfile: dest=.bashrc state=present regexp='^export https_proxy\=' line='export https_proxy=\"http://{{proxy_ip}}:{{proxy_port}}/\"'
+      become: yes
+    - name: Add proxy entry http in node
+      lineinfile: dest=.bashrc state=present regexp='^export http_proxy\=' line='export http_proxy=\"http://{{proxy_ip}}:{{proxy_port}}/\"'
+      become: yes
+    - name: Add git protocol in node
+      lineinfile: dest=.bashrc state=present regexp='^export git_protocol\=' line='export git_protocol=\"https\"'
+    - name: Add git protocol in node
+      lineinfile: dest=/etc/apt/apt.conf state=present create=yes regexp='^Acquire::http::Proxy' line='Acquire::http::Proxy \"http://{{proxy_ip}}:{{proxy_port}}/\";'
+      become: yes
+    - name: Update/create .wgetrc
+      lineinfile: dest='~/.wgetrc' state=present create=yes regexp='^https_proxy\=' line='https_proxy=http://{{proxy_ip}}:{{proxy_port}}/'
+    - name: Update wgetrc http entry
+      lineinfile: dest='~/.wgetrc' state=present regexp='^http_proxy\=' line='http_proxy=http://{{proxy_ip}}:{{proxy_port}}/'
+    - name: Update wgetrc ftp entry
+      lineinfile: dest='~/.wgetrc' state=present regexp='^ftp_proxy\=' line='ftp_proxy=http://{{proxy_ip}}:{{proxy_port}}/'
+    - name: Update wgetrc timeout entry
+      lineinfile: dest='~/.wgetrc' state=present regexp='^timeout\=' line='timeout=100'
