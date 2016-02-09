@@ -1,0 +1,29 @@
+---
+- hosts: admin
+  vars_files:
+    - vars/settings-default.yml
+  tasks:
+    - name: Add admin # it may not be required
+      lineinfile: dest=/etc/hosts line="{{admin.privateIp}} {{admin.hostname}}"
+      become: yes
+    - include: apt_get_update.yaml
+    - name: Install apt packages
+      apt:
+        pkg: "{{ item }}"
+        state: latest
+        force: yes
+      register: install_packages
+      until: install_packages|success
+      sudo: yes
+      with_items:
+       - ntp
+       - python-pexpect
+       - python-setuptools
+
+    - name: Check ceph version
+      shell: wget {{ceph_deb_repo}}{{ceph_deb_version}}
+    - name: Dpkg ceph
+      shell: sudo dpkg -i {{ceph_deb_version}}
+    - name: Create ceph directory
+      file: name={{ceph_dir}} state=directory mode=755
+

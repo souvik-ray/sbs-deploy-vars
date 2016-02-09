@@ -1,0 +1,23 @@
+---
+- hosts: admin
+  vars_files:
+    - vars/settings-default.yml
+  tasks:
+# may not be needed once cnf is available
+    - name: New monitor
+      shell: ceph-deploy new {{item.hostname}}
+      args:
+       chdir: "{{ceph_dir}}"
+      with_items: "{{mons}}"
+    - name: Set osd pool size
+      lineinfile: dest=mycluster/ceph.conf state=present regexp='^osd_pool_default_size\=' line='osd_pool_default_size={{osd_pool_size}}'
+    - name: Add initial monitor
+      shell: ceph-deploy mon create-initial
+      args:
+       chdir: "{{ceph_dir}}"
+    - name: Copy configs to nodes
+      shell: ceph-deploy admin {{item.hostname}}
+      with_items: "{{mons + osds}}"
+      args: 
+       chdir: "{{ceph_dir}}"
+

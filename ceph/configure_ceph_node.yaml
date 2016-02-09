@@ -1,0 +1,50 @@
+---
+- hosts: admin
+  vars_files:
+    - vars/node_varfile.yml
+  tasks:
+    - name: Add hosts
+      lineinfile: dest=/etc/hosts line="{{host.privateIp}} {{host.hostname}}"
+      become: yes
+    - name: copy key # check if multiple keys to be copied for different nodes
+      copy: src='{{host.key}}' dest='{{host.key}}' mode=400
+    - name: Create ssh config file
+      file: path=~/.ssh/config state=touch
+    - name: Add ssh config entries
+      lineinfile:
+        dest=~/.ssh/config
+        line="Host {{host.hostname}}\n Hostname {{host.hostname}}\n User {{host.user}}\n IdentityFile {{host.key}}"
+        state=present
+
+- hosts: "{{hostname}}"
+  vars_files:
+    - vars/node_varfile.yml
+  tasks:
+    - name: Add hosts entry in node
+      lineinfile: dest=/etc/hosts line="{{host.privateIp}} {{host.hostname}}" state=present
+      become: yes
+    - include: apt_get_update.yaml
+    - name: Install ntp
+      apt: name=ntp state=installed force=yes
+      become: yes
+    - name: Install git
+      apt: name=git state=installed force=yes
+      become: yes
+    - name: create a new user
+      user: 
+          name={{host.user}}
+          createhome=yes 
+          state=present
+          groups="sudo"
+          password="1234"
+          comment="Created user for ansible"
+      become: yes
+    - name: Add to sudoers
+      shell: echo "{{host.user}} ALL = (ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/{{host.user}}
+    - name: Set user permissions 
+      shell: sudo chmod 0440 /etc/sudoers.d/{{host.user}}
+   
+    - name: Set up git
+      shell: git config --global url."https://".insteadOf git://
+
+
