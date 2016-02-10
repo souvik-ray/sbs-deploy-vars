@@ -14,7 +14,7 @@
     - name: Add ssh config entries
       lineinfile:
         dest=~/.ssh/config
-        line="Host {{item.hostname}}\n Hostname {{item.hostname}}\n User {{ceph_deploy_user}}\n IdentityFile {{ceph_key_file_loc}}"
+        line="Host {{item.hostname}}\n Hostname {{item.hostname}}\n User {{ceph_user}}\n IdentityFile {{ceph_key_file_loc}}"
         state=present
       with_items: "{{mons + osds}}"
 
