@@ -1,16 +1,12 @@
 #hosts contains the monitors and osd nodes
 admin: {hostname: 'ip-172-31-13-143', privateIp: '172.31.13.143'}
-mons: [{hostname: 'ip-172-31-22-3', privateIp: '172.31.22.3'}]
+mons: [{hostname: 'ip-172-31-22-3', privateIp: '172.31.22.3'}, {hostname: 'ip-172-31-18-128', privateIp: '172.31.18.128'}, {hostname: 'ip-172-31-29-174', privateIp: '172.31.29.174'}]
 osds: [{hostname: 'ip-172-31-30-141', privateIp: '172.31.30.141'}, {hostname: 'ip-172-31-24-69', privateIp: '172.31.24.69'}]
 ceph_deb_version: 'ceph-deploy_1.5.28trusty_all.deb'
 ceph_deb_repo: 'http://download.ceph.com/debian-hammer/pool/main/c/ceph-deploy/'
-osd_pool_size: 2
-IdentityFile: '~/sandeep_key.pem'
+ceph_key_file: '~/sandeep_key.pem'
+ceph_key_file_loc: '~/key.pem'
 ceph_dir: 'mycluster'
-
-
-
-
-
-
-
+ceph_user: 'ubuntu'
+ceph_password: '1234'
+cluster_fsid: 'd419e8eb-27be-4d29-9d56-652c257d8f68'

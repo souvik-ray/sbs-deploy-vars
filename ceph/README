@@ -8,14 +8,11 @@ We can set export ANSIBLE_HOST_KEY_CHECKING=false where we will run ansible so t
 
 	ansible-playbook -v add_ceph_admin.yaml -i inventory -u ubuntu
 
-2. configure_ceph_node.yaml
+2. configure_ceph_nodes.yaml
    - it will be used to add other ceph nodes like monitors or osd nodes.
-   - it uses vars/node_varfile.yml to get host ip,hostname,user,idfile(as defined in host variable) and for this host node, we need to define a command line host name as mentioned in inventory file i.e. inventory host name is the same host as defined in variable file
+   - it uses vars/settings-default.yml to get mons/osds ip,hostname and ceph_user,IdentityFile and for all these nodes, we need to define a nodes variable in inventory file to have all these nodes IP.
 
-   I used this playbook to create a monitor, 2 osd nodes as follows, but specify the hostname and node_varfile.yml accordingly:
-	ansible-playbook -v configure_ceph_node.yaml -i inventory -u ubuntu -e hostname=mon
-	ansible-playbook -v configure_ceph_node.yaml -i inventory -u ubuntu -e hostname=osd1
-	ansible-playbook -v configure_ceph_node.yaml -i inventory -u ubuntu -e hostname=osd2
+	ansible-playbook -v configure_ceph_nodes.yaml -i inventory -u ubuntu
 
    We may also need to do proxy or ntp settings on these nodes using add_proxy_settings.yaml and add_ntp_settings.yaml playbooks.
 
@@ -43,7 +40,7 @@ Supporting playbooks:
       ceph-deploy purge {ceph-node} [{ceph-node}]
 
 2. add_proxy_settings.yaml or add_ntp_settings.yaml
-   -- To add proxy/ntp settings in nodes(mons/osds), we can do it separately on each node or all nodes by specifying hostname( and the required nodes in inventory file for hostname)
+   -- To add proxy/ntp settings in nodes(mons/osds), we can do it on all nodes ( i.e. by adding the required nodes in inventory file)
    -- It uses the proxy_ip and proxy port as specified in vars/proxy_info.yml 
-   	ansible-playbook -v add_proxy_settings.yaml -i inventory -u ubuntu -e hostname=nodes
-       	ansible-playbook -v add_ntp_settings.yaml -i inventory -u ubuntu -e hostname=mon
+   	ansible-playbook -v add_proxy_settings.yaml -i inventory -u ubuntu
+       	ansible-playbook -v add_ntp_settings.yaml -i inventory -u ubuntu
