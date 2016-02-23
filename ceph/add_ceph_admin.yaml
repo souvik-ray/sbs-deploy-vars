@@ -1,7 +1,7 @@
 ---
 - hosts: admin
   vars_files:
-    - vars/settings-default.yml
+    - vars/ceph_info.yml
   tasks:
     - name: Add admin # it may not be required
       lineinfile: dest=/etc/hosts line="{{admin.privateIp}} {{admin.hostname}}"
@@ -14,7 +14,7 @@
         force: yes
       register: install_packages
       until: install_packages|success
-      sudo: yes
+      become: yes
       with_items:
        - ntp
        - python-pexpect

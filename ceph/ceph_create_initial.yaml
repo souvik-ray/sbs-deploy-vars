@@ -1,10 +1,10 @@
 ---
 - hosts: admin
   vars_files:
-    - vars/settings-default.yml
+    - vars/ceph_info.yml
   tasks:
     - name: Apply ceph.conf
-      template: src='src/ceph.conf' dest='{{ceph_dir}}/ceph.conf'
+      template: src='src/ceph/ceph.conf' dest='{{ceph_dir}}/ceph.conf'
     - name: Add initial monitor
       shell: ceph-deploy mon create-initial
       args:
@@ -14,4 +14,7 @@
       with_items: "{{mons + osds}}"
       args: 
        chdir: "{{ceph_dir}}"
-
+- hosts: nodes
+  tasks:
+    - name: Set permissions
+      shell: sudo chmod +r /etc/ceph/ceph.client.admin.keyring

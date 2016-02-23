@@ -1,0 +1,6 @@
+1. Specify the required variables in ceph_info.yml, ntp_info.yml, osd_info.yml, proxy_info.yml (self-explanatory) and add public IPs in [admin] and [nodes] in inventory_ceph file.
+2. ansible-playbook -v deploy_ceph.yaml -i vars/inventory_ceph -u block_team
+3. Check the disks available manually on osd nodes by running the following command on admin node:
+ceph-deploy disk list <osd node>
+See the free disks and add in vars/osd_info.yml
+4. ansible-playbook -v ceph_add_osds.yaml -i vars/inventory_ceph -u block_team

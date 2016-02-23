@@ -1,0 +1,39 @@
+---
+### add_network_settings.yaml playbook is used to add ntp or name-server settings in nodes osds/mons
+      ### all these tasks adds or update ntp or name-server entry as specified in vars/ntp_info.yml
+      ### specify the required hosts in inventory file and command line
+      ### e.g. ansible-playbook -v add_network_settings.yaml -i inventory -u ubuntu -e hostname=hosts
+      ### and in inventory file we have following hosts
+      ###    [hosts]
+      ###    54.213.167.213 ansible_ssh_private_key_file=~/sandeep_key.pem
+      ###    54.191.166.115 ansible_ssh_private_key_file=~/sandeep_key.pem
+
+- hosts: all 
+  vars_files:
+    - vars/ntp_info.yml
+  tasks:
+    - name: Update name-server ip
+      lineinfile: dest='/etc/resolvconf/resolvconf.d/base' regexp='^nameserver' create=yes line='nameserver {{name_server_ip}}' state=present
+      become: yes
+#    - name: Update name-server 
+#      lineinfile: dest='/etc/resolvconf/resolvconf.d/base' regexp='^search' line='search {{name_server}}' state=present
+#      become: yes
+    - name: Resolve conf
+      command: resolvconf -u
+      become: yes
+    - include: apt_get_update.yaml
+    - name: Install ntp
+      apt: name=ntp state=installed force=yes
+      become: yes
+    - name: Add ntp server
+      lineinfile: dest=/etc/ntp.conf regexp='^server' line='server {{ntp_server_ip}}' state=present
+      become: yes
+    - name: Stop ntp
+      service: name=ntp state=stopped
+      become: yes
+    - name: Disable ntp
+      shell: ntpd -gq
+      become: yes
+    - name: Start ntp
+      service: name=ntp state=started
+      become: yes

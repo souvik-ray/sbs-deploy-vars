@@ -1,0 +1,9 @@
+---
+- include: add_proxy_settings.yaml
+- include: add_network_settings.yaml
+- include: add_ceph_admin.yaml
+- include: configure_ceph_nodes.yaml
+- include: install_ceph.yaml
+- include: ceph_create_initial.yaml
+#- include: ceph_add_osds.yaml
+

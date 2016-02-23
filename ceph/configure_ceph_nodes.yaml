@@ -1,26 +1,25 @@
 ---
 - hosts: admin
   vars_files:
-    - vars/settings-default.yml
+    - vars/ceph_info.yml
   tasks:
     - name: Add hosts
       lineinfile: dest=/etc/hosts line="{{item.privateIp}} {{item.hostname}}"
       become: yes
       with_items: "{{mons + osds}}"
     - name: copy key # check if multiple keys to be copied for different nodes
-      copy: src='{{ceph_key_file}}' dest='{{ceph_key_file_loc}}' mode=400
+      copy: src='{{IdentityFile_src}}' dest='{{IdentityFile}}' mode=400
     - name: Create ssh config file
       file: path=~/.ssh/config state=touch
     - name: Add ssh config entries
       lineinfile:
         dest=~/.ssh/config
-        line="Host {{item.hostname}}\n Hostname {{item.hostname}}\n User {{ceph_user}}\n IdentityFile {{ceph_key_file_loc}}"
-        state=present
+        line="Host {{item.hostname}}\n Hostname {{item.hostname}}\n User {{ceph_user}}\n IdentityFile {{IdentityFile}}\n StrictHostKeyChecking no\n UserKnownHostsFile=/dev/null"
       with_items: "{{mons + osds}}"
 
 - hosts: nodes
   vars_files:
-    - vars/settings-default.yml
+    - vars/ceph_info.yml
   tasks:
     - name: Add hosts entry in node
       lineinfile: dest=/etc/hosts line="{{item.privateIp}} {{item.hostname}}" state=present
@@ -49,5 +48,3 @@
    
     - name: Set up git
       shell: git config --global url."https://".insteadOf git://
-
-
