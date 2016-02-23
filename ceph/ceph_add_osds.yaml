@@ -2,7 +2,7 @@
 - hosts: admin
   vars_files:
     - vars/osd_info.yml
-    - vars/settings-default.yml
+    - vars/ceph_info.yml
   tasks:
     - name: Disk list 
       shell: ceph-deploy disk list {{item.hostname}}

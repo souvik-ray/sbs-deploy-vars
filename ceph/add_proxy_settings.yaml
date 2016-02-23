@@ -1,14 +1,13 @@
 ---
 ### add_proxy_settings.yaml playbook is used to add proxy settings in nodes osds/mons so that they will be able to talk to the network
       ### all these tasks adds or update proxy entry with new ip or port as specified in vars/proxy_info.yml
-      ### specify the required hosts in inventory file and command line
-      ### e.g. ansible-playbook -v add_proxy_settings.yaml -i inventory -u ubuntu -e hostname=hosts
-      ### and in inventory file we have following hosts
-      ###    [hosts]
+      ### e.g. ansible-playbook -v add_proxy_settings.yaml -i inventory -u ubuntu
+      ### and in inventory file we can specify multiple nodes like
+      ###    [nodes]
       ###    54.213.167.213 ansible_ssh_private_key_file=~/sandeep_key.pem
       ###    54.191.166.115 ansible_ssh_private_key_file=~/sandeep_key.pem
 
-- hosts: "{{hostname}}"
+- hosts: all 
   vars_files:
     - vars/proxy_info.yml
   tasks:
