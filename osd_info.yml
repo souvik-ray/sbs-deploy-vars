@@ -1,0 +1,6 @@
+osd_hosts: [{hostname: 'sbsnewstagst1', dev: '/dev/sdb'}, {hostname: 'sbsnewstagst2', dev: '/dev/sdc'}]
+#osd_hosts:
+#  - hostname: 'ip-172-31-5-176'
+#    dev: '/dev/xvd{d..z}'
+#  - hostname: 'ip-172-31-5-176'
+#    dev: '/dev/xvde'
