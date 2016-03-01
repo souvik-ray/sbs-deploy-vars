@@ -1,9 +1,12 @@
 ---
 - hosts: hostList
   vars_files: 
-    - vars/settings-default.yml
+    - vars/haproxy_info.yml
   tasks:
+    - name: copy pem
+      template: src=src/{{sbs_haproxy_ssl_pem}} dest=/etc/haproxy/{{sbs_haproxy_ssl_pem}}
+      become: yes
     - name: Configure haproxy
       template: src=src/haproxy.cfg dest=/etc/haproxy/haproxy.cfg
-      sudo: yes
-      sudo_user: root
+      become: yes
+
