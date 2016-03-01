@@ -1,0 +1,5 @@
+---
+- include: deploy_package.yaml
+- include: apply_config.yaml
+- include: service_state.yaml operation=started
+- include: create_cinderdb.yaml
