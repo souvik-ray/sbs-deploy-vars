@@ -1,5 +1,7 @@
 ---
 - hosts: hostList
+  vars_files:
+    - vars/proxy_info.yml
   tasks:
     - name: Disable AppArmor
       command: ln -s {/etc/apparmor.d,/etc/apparmor.d/disable}/usr.sbin.mysqld
@@ -14,6 +16,9 @@
     - name: Add the GnuPG key
       command: apt-key adv --keyserver keyserver.ubuntu.com --recv BC19DDBA
       become: yes
+      environment: 
+        http_proxy: http://{{proxy_ip}}:{{proxy_port}}
+        https_proxy: http://{{proxy_ip}}:{{proxy_port}}
     - name: Create galera.list file
       file: path=/etc/apt/sources.list.d/galera.list state=touch
       become: yes
@@ -21,20 +26,10 @@
       lineinfile: dest=/etc/apt/sources.list.d/galera.list state=present line="deb http://releases.galeracluster.com/ubuntu trusty main"
       become: yes
     - name: Update apt sources
-      apt:
-        update_cache: yes
-        cache_valid_time: 600
-      register: apt_update
-      until: apt_update|success
-      become: yes
+      shell: sudo apt-get update
     - name: Install apt packages
-      apt:
-        pkg: "{{ item }}"
-        state: latest
-        force: yes
-      register: install_packages
-      until: install_packages|success
-      sudo: yes
+      apt: name="{{ item }}" state=installed force=yes
+      become: yes
       with_items:
        - galera-3
        - galera-arbitrator-3

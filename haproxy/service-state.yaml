@@ -1,6 +1,6 @@
 ---
-- hosts: host
+- hosts: hostList
   tasks:
     - name: Service haproxy
       service: name=haproxy state={{ operation }}
-      sudo: yes
+      become: yes

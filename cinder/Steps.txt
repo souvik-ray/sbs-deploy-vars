@@ -1,0 +1,3 @@
+1. Specify the required variables in cinder_info.yml (self-explanatory) and run the following:
+
+	ansible-playbook -v deploy_cinder.yaml -i vars/inventory -u block_team

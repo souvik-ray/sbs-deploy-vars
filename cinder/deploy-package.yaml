@@ -1,0 +1,43 @@
+- hosts: hostList
+  vars_files:
+    - vars/cinder_info.yml
+    - vars/proxy_info.yml
+  tasks:
+    - name: Add ceph-deploy path
+      lineinfile: dest=/etc/apt/sources.list line="deb http://ubuntu-cloud.archive.canonical.com/ubuntu trusty-updates/kilo main" state=present
+      become: yes
+    - name: Add cinder packages path
+      lineinfile: dest=/etc/apt/sources.list line="{{cinder_repo_path}}"
+      become: yes
+    - name: Add priority
+      template: src=src/1002-priority dest=/etc/apt/preferences.d/1002-priority
+      become: yes
+    - name: apt update
+      shell: sudo apt-get update
+    - name: install all cinder packages
+      shell: sudo apt-get install -y --force-yes cinder-common python-cinder cinder-api cinder-scheduler cinder-volume cinder-backup python-cinderclient python-keystoneclient python-glanceclient python-metrics python-novaclient python-openstackclient
+    - name: Add ceph-deploy path
+      lineinfile: dest=/etc/apt/sources.list.d/ceph.list state=present create=yes line='deb {{ceph_deb_version}} trusty main'
+      become: yes
+    - name: Update/create .wgetrc
+      lineinfile: dest='~/.wgetrc' state=present create=yes regexp='^https_proxy\=' line='https_proxy=http://{{proxy_ip}}:{{proxy_port}}/'
+    - name: Update wgetrc http entry
+      lineinfile: dest='~/.wgetrc' state=present regexp='^http_proxy\=' line='http_proxy=http://{{proxy_ip}}:{{proxy_port}}/'
+    - name: Update wgetrc ftp entry
+      lineinfile: dest='~/.wgetrc' state=present regexp='^ftp_proxy\=' line='ftp_proxy=http://{{proxy_ip}}:{{proxy_port}}/'
+    - name: Update wgetrc timeout entry
+      lineinfile: dest='~/.wgetrc' state=present regexp='^timeout\=' line='timeout=100'
+    - name: Check status
+      shell: wget -q -O- 'https://download.ceph.com/keys/release.asc' | sudo apt-key add -
+    - name: Install ceph-common
+      apt: name=ceph-common state=installed force=yes
+      become: yes
+    - name: apt update
+      shell: sudo apt-get update
+    - name: Install python-rbd
+      apt: name=python-rbd state=installed
+      become: yes
+    - name: Install cinder ec2
+      shell: sudo apt-get install python-cinder-ec2-api
+
+

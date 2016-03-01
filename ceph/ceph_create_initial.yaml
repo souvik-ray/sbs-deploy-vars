@@ -4,7 +4,7 @@
     - vars/ceph_info.yml
   tasks:
     - name: Apply ceph.conf
-      template: src='src/ceph/ceph.conf' dest='{{ceph_dir}}/ceph.conf'
+      template: src='src/ceph.conf' dest='{{ceph_dir}}/ceph.conf'
     - name: Add initial monitor
       shell: ceph-deploy mon create-initial
       args:

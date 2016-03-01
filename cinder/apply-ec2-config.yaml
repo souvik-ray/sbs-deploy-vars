@@ -1,0 +1,17 @@
+---
+- hosts: hostList
+  vars_files:
+    - vars/cinder_info.yml
+  tasks:
+    - name: Make ec2 dir
+      file: path=/etc/ec2api state=directory mode=0755
+      become: yes
+    - name: Update api-paste.ini
+      template: src=src/cinder/ec2/api-paste.ini dest=/etc/ec2api/
+      become: yes
+    - name: Update ec2api.conf
+      template: src=src/cinder/ec2/ec2api.conf dest=/etc/ec2api
+      become: yes
+    - name: Copy
+      copy: src=src/cinder/ec2/cinder-ec2-api.conf dest=/etc/init/
+      become: yes

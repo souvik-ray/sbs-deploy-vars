@@ -1,0 +1,24 @@
+---
+- hosts: hostList
+  vars_files:
+    - vars/galera_info.yml
+  tasks:
+    - name: update password
+      command: >
+        mysql --user={{mysql_user}}
+        --batch
+        --execute="UPDATE mysql.user SET Password=PASSWORD('{{mysql_passwd}}') WHERE User='{{mysql_user}}'; FLUSH PRIVILEGES;"
+      ignore_errors: yes
+    - name: Create cinder database
+      mysql_db: name=cinder state=present login_user={{mysql_user}} login_password={{mysql_passwd}}
+    - name: Set privileges on localhost
+      command: >
+        mysql --user={{mysql_user}} --password={{mysql_passwd}}
+        --batch
+        --execute="GRANT ALL PRIVILEGES ON cinder.* TO {{mysql_user}}@localhost IDENTIFIED BY '{{mysql_passwd}}'"
+    - name: Set privileges on %
+      command: >
+        mysql --user={{mysql_user}} --password={{mysql_passwd}} 
+        --batch
+        --execute="GRANT ALL PRIVILEGES ON cinder.* TO {{mysql_user}}@'%' IDENTIFIED BY '{{mysql_passwd}}'"
+

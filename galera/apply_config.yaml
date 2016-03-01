@@ -1,8 +1,9 @@
 ---
 - hosts: hostList
   vars_files:
-    - vars/settings-default.yml
+    - vars/galera_info.yml
   tasks:
     - name: Copy mysql conf
       template: src=src/my.cnf dest=/etc/mysql/my.cnf
       become: yes
+

@@ -14,7 +14,7 @@
     - name: Add ssh config entries
       lineinfile:
         dest=~/.ssh/config
-        line="Host {{item.hostname}}\n Hostname {{item.hostname}}\n User {{ceph_user}}\n IdentityFile {{IdentityFile}}\n StrictHostKeyChecking no\n UserKnownHostsFile=/dev/null"
+        line="Host {{item.hostname}}\n Hostname {{item.hostname}}\n User {{user}}\n IdentityFile {{IdentityFile}}\n StrictHostKeyChecking no\n UserKnownHostsFile=/dev/null"
       with_items: "{{mons + osds}}"
 
 - hosts: nodes

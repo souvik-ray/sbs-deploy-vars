@@ -1,0 +1,16 @@
+---
+- hosts: hostList
+  vars_files:
+    - vars/zeromq_info.yml
+  tasks:
+    - name: Add hosts entry in node
+      lineinfile: dest=/etc/hosts line="{{item.ip}} {{item.hostname}}" state=present
+      become: yes
+      with_items: "{{cinder_api_hosts}}"
+
+    - name: Copy matchmaker file
+      template: src=src/matchmaker_ring.json dest=/etc/oslo/matchmaker_ring.json
+      become: yes
+    - name: Copy oslo config file
+      template: src=src/oslo-messaging-zmq-receiver.conf dest=/etc/init/
+      become: yes

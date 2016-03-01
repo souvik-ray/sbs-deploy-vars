@@ -1,12 +1,19 @@
 ---
 - hosts: hostList
+  vars_files:
+    - vars/proxy_info.yml
   tasks:
+    - name: Add repo to haproxy list
+      lineinfile: dest=/etc/apt/sources.list.d/haproxy.list create=true state=present line="deb http://ppa.launchpad.net/vbernat/haproxy-1.6/ubuntu trusty main"
+      become: yes
+    - name: Update apt-get
+      shell: sudo apt-get update
     - name: Ensure haproxy is installed
-      apt: name=haproxy state=installed
-      sudo: yes
+      apt: name=haproxy state=installed force=yes
+      become: yes
     - name: Enable haproxy
       lineinfile: dest=/etc/default/haproxy state=present regexp='^ENABLED\=' line='ENABLED=1'
-      sudo: yes
+      become: yes
     - name: Set defaults in haproxy
       command: update-rc.d haproxy defaults
-      sudo: yes
+      become: yes

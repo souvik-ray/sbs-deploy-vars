@@ -1,0 +1,8 @@
+---
+- hosts: hostList
+  tasks:
+    - name: Services cinder
+      service: name={{item}} state={{ operation }}
+      become: yes
+      with_items: 
+        - cinder-ec2-api

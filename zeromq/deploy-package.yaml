@@ -1,0 +1,18 @@
+- hosts: hostList
+  tasks:
+    - name: Add repo
+      lineinfile: dest=/etc/apt/sources.list line='deb http://ubuntu-cloud.archive.canonical.com/ubuntu trusty-updates/kilo main' state=present
+      become: yes
+    - include: apt_get_update.yaml
+    - name: Install apt packages
+      apt:
+        pkg: "{{ item }}"
+        state: latest
+        force: yes
+      register: install_packages
+      until: install_packages|success
+      become: yes
+      with_items:
+       - libzmq3
+       - python-zmq
+       - oslo-messaging-zmq-receiver
