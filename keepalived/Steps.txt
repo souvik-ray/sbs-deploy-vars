@@ -1,2 +1,2 @@
-1. Specify the required variables in keepalived_info.yml (self-explanatory) and add public IPs in [hostList] in inventory_keepalived file.
-2. ansible-playbook -v deploy_keepalived.yaml -i vars/inventory_keepalived -u block_team
+1. Specify the required variables in keepalived_info.yml (self-explanatory) and it deploy on IPs in [hostList] in vars/inventory file.
+2. ansible-playbook -v deploy_keepalived.yaml -i vars/inventory -u block_team

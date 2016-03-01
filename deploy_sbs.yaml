@@ -1,0 +1,6 @@
+---
+- include: ceph/deploy_ceph.yaml
+- include: keepalived/deploy_keepalived.yaml 
+- include: galera/deploy_galera.yaml 
+- include: haproxy/deploy_haproxy.yaml 
+- include: cinder/deploy_cinder.yaml 
