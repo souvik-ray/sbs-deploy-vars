@@ -1,0 +1,9 @@
+---
+- hosts: hostList
+  tasks:
+    - name: Initialize cinder db
+      shell: /bin/sh -c "cinder-manage db sync" cinder 
+      become: yes
+
+
+

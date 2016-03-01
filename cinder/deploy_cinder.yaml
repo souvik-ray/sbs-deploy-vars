@@ -1,0 +1,18 @@
+---
+- include: deploy-package.yaml
+- include: apply-config.yaml
+- include: copy_cer.yaml
+
+# add cephx keyring steps
+- include: cephx-keyring.yaml
+
+# add zeromq steps
+- include: ../zeromq/deploy_zmq.yaml 
+
+- include: init-cinder.yaml
+
+# ensure that volume is running on 1 node and other cinder services on all hosts
+- include: service-state.yaml operation=started
+
+- include: apply-ec2-config.yaml
+- include: ec2-state.yaml operation=started

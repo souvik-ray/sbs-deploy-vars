@@ -1,0 +1,33 @@
+---
+- hosts: cephNode
+  tasks:
+    - name: Generate cephx keyring
+      shell: ceph auth get-or-create client.cinder mon 'allow r' osd 'allow class-read object_prefix rbd_children, allow rwx pool=sbs'
+    - name: Create keyring file
+      shell: ceph auth get-or-create client.cinder | tee ceph.client.cinder.keyring
+    - name: Fetch a file
+      fetch: src='ceph.client.cinder.keyring' dest='~/' flat=yes
+    - name: Fetch admin keyring
+      fetch: src='/etc/ceph/ceph.client.admin.keyring' dest='~/' flat=yes
+
+    - name: Generate cinder-backup keyring
+      shell: ceph auth get-or-create client.cinder-backup mon 'allow r' osd 'allow class-read object_prefix rbd_children, allow rwx pool=backups'
+    - name: Create cinder-backup keyring file
+      shell: ceph auth get-or-create client.cinder-backup | tee ceph.client.cinder-backup.keyring
+    - name: Fetch a file
+      fetch: src='ceph.client.cinder-backup.keyring' dest='~/' flat=yes
+- hosts: hostList
+  tasks:
+    - name: copy ceph client keyring to cinder
+      template: src='~/ceph.client.cinder.keyring' dest='/etc/ceph/'
+      become: yes
+    - name: copy ceph client keyring to cinder
+      template: src='~/ceph.client.cinder-backup.keyring' dest='/etc/ceph/'
+      become: yes
+    - name: copy ceph admin keyring to cinder
+      template: src='~/ceph.client.admin.keyring' dest='/etc/ceph/'
+      become: yes
+    - name: Set ownership 
+      shell: chown cinder:cinder /etc/ceph/ceph.client.cinder.keyring /etc/ceph/ceph.client.admin.keyring /etc/ceph/ceph.client.cinder-backup.keyring
+      become: yes
+

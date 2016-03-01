@@ -1,0 +1,14 @@
+---
+- hosts: hostList
+  tasks:
+    - name: Services cinder
+      service: name={{item}} state={{ operation }}
+      become: yes
+      with_items: 
+        - cinder-api
+        - cinder-scheduler
+        - cinder-backup
+    - name: Run volume on 1 node
+      service: name=cinder-volume state={{operation}}
+      become: yes
+      run_once: true
