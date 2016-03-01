@@ -1,0 +1,7 @@
+---
+- include: ../cinder/service-state.yaml operation=stopped
+- include: deploy-package.yaml
+- include: apply-config.yaml
+- include: cinder-zmq-receiver.yaml
+- include: ../cinder/service-state.yaml operation=started
+- include: service-state.yaml operation=started

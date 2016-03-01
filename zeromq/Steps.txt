@@ -1,0 +1,2 @@
+1. Specify the required variables in zmq_info.yml (self-explanatory) and add public IPs in [hostList] in inventory_zmq file.
+2. It is already being covered in cinder deployment.
