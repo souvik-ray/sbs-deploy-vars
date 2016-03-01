@@ -1,0 +1,13 @@
+---
+- hosts: hostList
+  tasks:
+    - name: Add cinder user
+      shell: sudo useradd cinder
+      become: yes
+      ignore_errors: yes
+    - name: Set ownership of cinder directory
+      shell: chown cinder:cinder /var/run/cinder
+      become: yes
+#    - name: Set config in zmq-receiver
+#      shell: /usr/bin/oslo-messaging-zmq-receiver --config-file /etc/cinder/cinder.conf &
+#      become: yes
