@@ -2,22 +2,27 @@ Scripts for ceph-deploy automations are described below, please modify "./invent
 
 We can set export ANSIBLE_HOST_KEY_CHECKING=false where we will run ansible so that it will be able to do SSH without any prompt.
 
+To deploy ceph:
+ansible-playbook -v run_me.yaml -i inventory -u ubuntu
+
+Atomic playbooks:
+
 1. add_ceph_admin.yaml
    - It will add the Admin node of ceph.
-   - it uses vars/settings_default.yml to get admin.(ip/host), IdentityFile and ceph_deb_version.
+   - it uses vars/ceph_info.yml to get admin.(ip/host), IdentityFile and ceph_deb_version.
 
 	ansible-playbook -v add_ceph_admin.yaml -i inventory -u ubuntu
 
 2. configure_ceph_nodes.yaml
    - it will be used to add other ceph nodes like monitors or osd nodes.
-   - it uses vars/settings-default.yml to get mons/osds ip,hostname and ceph_user,IdentityFile and for all these nodes, we need to define a nodes variable in inventory file to have all these nodes IP.
+   - it uses vars/ceph_info.yml to get mons/osds ip,hostname and ceph_user,IdentityFile and for all these nodes, we need to define a nodes variable in inventory file to have all these nodes IP.
 
 	ansible-playbook -v configure_ceph_nodes.yaml -i inventory -u ubuntu
 
    We may also need to do proxy or ntp settings on these nodes using add_proxy_settings.yaml and add_ntp_settings.yaml playbooks.
 
 3. install_ceph.yaml
-   - it installs ceph on the hosts(mons and osds nodes) specified in vars/settings_default.yml file.
+   - it installs ceph on the hosts(mons and osds nodes) specified in vars/ceph_info.yml file.
 
 	ansible-playbook -v install_ceph.yaml -i inventory -u ubuntu 
 
@@ -31,6 +36,7 @@ We can set export ANSIBLE_HOST_KEY_CHECKING=false where we will run ansible so t
        - ceph-deploy disk list <hostname> //do this on admin node e.g. ceph-deploy disk list <monitor_host_name>
 
    After populating osd_info.yml, we can run ceph_add_osds.yaml to prepare and activate the required osds.
+        ansible-playbook -v ceph_add_osds.yaml -i inventory -u ubuntu
 
 Supporting playbooks:
 1. purge_cluster.yaml:
@@ -39,8 +45,8 @@ Supporting playbooks:
       ceph-deploy forgetkeys
       ceph-deploy purge {ceph-node} [{ceph-node}]
 
-2. add_proxy_settings.yaml or add_ntp_settings.yaml
-   -- To add proxy/ntp settings in nodes(mons/osds), we can do it on all nodes ( i.e. by adding the required nodes in inventory file)
+2. add_proxy_settings.yaml
+   -- To add proxy settings in nodes(mons/osds), we can do it separately on each node or all nodes by specifying hostname( and the required nodes in inventory file for hostname)
    -- It uses the proxy_ip and proxy port as specified in vars/proxy_info.yml 
-   	ansible-playbook -v add_proxy_settings.yaml -i inventory -u ubuntu
-       	ansible-playbook -v add_ntp_settings.yaml -i inventory -u ubuntu
+   	ansible-playbook -v create_initial.yaml -i inventory -u ubuntu -e hostname=nodes
+       	ansible-playbook -v create_initial.yaml -i inventory -u ubuntu -e hostname=mon
