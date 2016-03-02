@@ -1,0 +1,8 @@
+#haproxy conf variables
+
+sbs_haproxy_ssl_pem: 'sbs.ind-west-1.staging.jiocloudservices.com-haproxy.pem'
+keepalived_haproxy_vip: '10.140.215.187'
+cinder_api_hosts: [{hostname: 'sbsnewstagspare2', ip: '10.140.215.140'}, {hostname: 'sbsnewstagspare3', ip: '10.140.215.141'}, {hostname: 'sbsnewstagspare4', ip: '10.140.215.142'}]
+cinder_ec2_api_hosts: "{{cinder_api_hosts}}"
+mysql_master_host: "{{cinder_api_hosts[0]}}"
+mysql_backup_hosts: ["{{cinder_api_hosts[1]}}", "{{cinder_api_hosts[2]}}"]

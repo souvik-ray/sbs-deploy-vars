@@ -1,0 +1,5 @@
+#zeromq variables
+cinder_api_hosts: [ {hostname: 'sbsnewstagcinder1', ip: '10.140.215.134'}, {hostname: 'sbsnewstagcinder2', ip: '10.140.215.135'}, {hostname: 'sbsnewstaghaproxy1', ip: '10.140.215.136'} ]
+cinder_volume_hosts: 'sbsvolviphost' 
+cinder_scheduler_hosts: "{{cinder_api_hosts}}"
+cinder_backup_hosts: "{{cinder_api_hosts}}"
