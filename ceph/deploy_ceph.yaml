@@ -6,4 +6,4 @@
 - include: install_ceph.yaml
 - include: ceph_create_initial.yaml
 #- include: ceph_add_osds.yaml
-
+#- include: ceph_create_pools.yaml

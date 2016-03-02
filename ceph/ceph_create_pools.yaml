@@ -1,0 +1,11 @@
+---
+- hosts: cephNode 
+  vars_files:
+    - vars/ceph_info.yml
+  tasks:
+    - name: Remove default rbd pool
+      shell: sudo ceph osd pool delete rbd rbd --yes-i-really-really-mean-it
+    - name: Create sbs pool
+      shell: sudo ceph osd pool create sbs {{num_pgs_for_sbs}} {{num_pgs_for_sbs}}
+    - name: Create backups pool
+      shell: sudo ceph osd pool create backups {{num_pgs_for_backups}} {{num_pgs_for_backups}}
