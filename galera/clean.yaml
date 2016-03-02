@@ -1,0 +1,13 @@
+---
+- hosts: hostList
+  vars_files:
+    - vars/proxy_info.yml
+  tasks:
+    - include: service-state.yaml operation=stopped
+    - name: Swap off
+      shell: swapoff /swapfile
+      become: yes
+    - name: Remove /swapfile
+      shell: rm -rf /swapfile
+      become: yes
+

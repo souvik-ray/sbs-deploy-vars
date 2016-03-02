@@ -3,7 +3,7 @@
     - vars/cinder_info.yml
   tasks:
     - name: Copy cer file dir
-      copy: src={{cer_files}} dest=/usr/local/share/ca-certificates/
+      copy: src=src/{{cer_files}} dest=/usr/local/share/ca-certificates/
       become: yes
     - name: update certificates
       shell: sudo update-ca-certificates --fresh
