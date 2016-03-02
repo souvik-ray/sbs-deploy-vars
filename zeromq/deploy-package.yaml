@@ -3,7 +3,8 @@
     - name: Add repo
       lineinfile: dest=/etc/apt/sources.list line='deb http://ubuntu-cloud.archive.canonical.com/ubuntu trusty-updates/kilo main' state=present
       become: yes
-    - include: apt_get_update.yaml
+    - name: apt update
+      shell: sudo apt-get update
     - name: Install apt packages
       apt:
         pkg: "{{ item }}"

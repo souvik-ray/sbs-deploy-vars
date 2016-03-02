@@ -6,7 +6,8 @@
     - name: Add admin # it may not be required
       lineinfile: dest=/etc/hosts line="{{admin.privateIp}} {{admin.hostname}}"
       become: yes
-    - include: apt_get_update.yaml
+    - name: apt update
+      shell: sudo apt-get update
     - name: Install apt packages
       apt:
         pkg: "{{ item }}"
