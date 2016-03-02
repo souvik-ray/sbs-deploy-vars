@@ -21,7 +21,8 @@
     - name: Resolve conf
       command: resolvconf -u
       become: yes
-    - include: apt_get_update.yaml
+    - name: apt update
+      shell: sudo apt-get update
     - name: Install ntp
       apt: name=ntp state=installed force=yes
       become: yes

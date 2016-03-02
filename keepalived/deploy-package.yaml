@@ -7,7 +7,8 @@
     - name: Read values from file
       command: sysctl -p
       become: yes
-    - include: apt_get_update.yaml
+    - name: apt update
+      shell: sudo apt-get update
     - name: Ensure keepalived is installed
       apt: name=keepalived state=installed
       become: yes

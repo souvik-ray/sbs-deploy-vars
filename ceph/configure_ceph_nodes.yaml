@@ -25,7 +25,8 @@
       lineinfile: dest=/etc/hosts line="{{item.privateIp}} {{item.hostname}}" state=present
       become: yes
       with_items: "{{mons + osds}}"
-    - include: apt_get_update.yaml
+    - name: apt update
+      shell: sudo apt-get update
     - name: Install ntp
       apt: name=ntp state=installed force=yes
       become: yes
