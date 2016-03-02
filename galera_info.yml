@@ -1,0 +1,5 @@
+#galera conf varibles
+mysql_master_host: {hostname: 'sbsnewstagspare2', ip: '10.140.215.140'}
+mysql_backup_hosts: [{hostname: 'sbsnewstagspare3', ip: '10.140.215.141'}, {hostname: 'sbsnewstagspare4', ip: '10.140.215.142'}]
+mysql_user: 'root'
+mysql_passwd: 'test123'

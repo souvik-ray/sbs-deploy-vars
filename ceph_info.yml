@@ -5,8 +5,12 @@ osds: [{hostname: 'sbsnewstagst1', privateIp: '10.140.215.149'}, {hostname: 'sbs
 ceph_deb_version: 'ceph-deploy_1.5.28trusty_all.deb'
 ceph_deb_repo: 'http://download.ceph.com/debian-hammer/pool/main/c/ceph-deploy/'
 IdentityFile: '~/key.pem'
-IdentityFile_src: '~/key.pem'
 ceph_dir: 'mycluster'
-ceph_user: 'block_team'
+user: 'block_team'
+ceph_user: 'ceph'
 ceph_password: '1234'
 cluster_fsid: 'd419e8eb-27be-4d29-9d56-652c257d8f68'
+osd_pool_default_size: 2
+num_pgs_for_sbs: 100
+num_pgs_for_backups: 120
+

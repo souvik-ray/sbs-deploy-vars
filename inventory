@@ -1,0 +1,21 @@
+### Cinder nodes list
+[hostList]
+10.140.215.140 ansible_ssh_private_key_file=~/key.pem hostname=sbsnewstagspare2 my_ip=10.140.215.140 extra_arg=--wsrep-new-cluster 
+10.140.215.141 ansible_ssh_private_key_file=~/key.pem hostname=sbsnewstagspare3 my_ip=10.140.215.141 extra_arg=''
+#10.140.215.138 ansible_ssh_private_key_file=~/key.pem hostname=sbsnewstagdeploy1 my_ip=10.140.215.138 extra_arg=''
+10.140.215.142 ansible_ssh_private_key_file=~/key.pem hostname=sbsnewstagspare4 my_ip=10.140.215.142 extra_arg=''
+
+### one of the ceph nodes
+[cephNode]
+10.140.215.131 ansible_ssh_private_key_file=~/key.pem hostname=sbsnewstagmon1 ip=10.140.215.131
+
+### Ceph cluster nodes
+[admin]
+10.140.215.139 ansible_ssh_private_key_file=~/key.pem
+[nodes]
+10.140.215.149 ansible_ssh_private_key_file=~/key.pem
+10.140.215.150 ansible_ssh_private_key_file=~/key.pem
+10.140.215.133 ansible_ssh_private_key_file=~/key.pem
+10.140.215.132 ansible_ssh_private_key_file=~/key.pem
+10.140.215.131 ansible_ssh_private_key_file=~/key.pem
+

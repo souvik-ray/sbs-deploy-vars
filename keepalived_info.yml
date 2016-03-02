@@ -1,0 +1,6 @@
+#keepalived conf variables
+keepalived_interface: 'em49'
+keepalived_vol_interface: "{{keepalived_interface}}"
+keepalived_vol_vip: '10.140.215.190'
+keepalived_haproxy_vip: '10.140.215.187'
+
