@@ -1,7 +1,7 @@
 ---
 - hosts: hostList
   vars_files:
-    - vars/zeromq_info.yml
+    - vars/zmq_info.yml
   tasks:
     - name: Add hosts entry in node
       lineinfile: dest=/etc/hosts line="{{item.ip}} {{item.hostname}}" state=present

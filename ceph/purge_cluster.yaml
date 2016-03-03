@@ -1,13 +1,13 @@
 ---
 - hosts: admin
   vars_files:
-    - vars/settings-default.yml
+    - vars/ceph_info.yml
   tasks:
     - name: Purge ceph
       shell: ceph-deploy purge {{item.hostname}}
-      with_items: "{{admin + mons + osds}}"
+      with_items: "{{mons + osds}}"
     - name: Forget keys ceph
       shell: ceph-deploy forgetkeys
     - name: Purgedata ceph
       shell: ceph-deploy purge {{item.hostname}}
-      with_items: "{{admin + mons + osds}}"
+      with_items: "{{mons + osds}}"
