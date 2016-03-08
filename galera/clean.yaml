@@ -8,4 +8,8 @@
     - name: Remove /swapfile
       shell: rm -rf /swapfile
       become: yes
+    - name: purge
+      shell: sudo apt-get purge -y
+    - name: Remove galera apt
+      shell: sudo apt-get remove galera-3 galera-arbitrator-3 -y
 

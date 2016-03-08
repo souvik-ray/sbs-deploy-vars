@@ -6,4 +6,10 @@
     - name: Configure keepalived
       template: src=src/keepalived.conf dest=/etc/keepalived/keepalived.conf
       become: yes
+    - name: Configure keepalivednotify
+      template: src=src/keepalivednotify.sh dest=/usr/local/bin/
+      become: yes
+    - name: Set Permissions
+      shell: chmod +x /usr/local/bin/keepalivednotify.sh
+      become: yes
 
