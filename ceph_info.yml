@@ -5,6 +5,7 @@ osds: [{hostname: 'sbsnewstagst1', privateIp: '10.140.215.149'}, {hostname: 'sbs
 ceph_deb_version: 'ceph-deploy_1.5.28trusty_all.deb'
 ceph_deb_repo: 'http://download.ceph.com/debian-hammer/pool/main/c/ceph-deploy/'
 IdentityFile: '~/key.pem'
+IdentityFile_src: '~/key.pem'
 ceph_dir: 'mycluster'
 user: 'block_team'
 ceph_user: 'ceph'

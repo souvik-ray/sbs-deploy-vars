@@ -1,9 +1,8 @@
 ### Cinder nodes list
 [hostList]
-10.140.215.140 ansible_ssh_private_key_file=~/key.pem hostname=sbsnewstagspare2 my_ip=10.140.215.140 extra_arg=--wsrep-new-cluster 
-10.140.215.141 ansible_ssh_private_key_file=~/key.pem hostname=sbsnewstagspare3 my_ip=10.140.215.141 extra_arg=''
-#10.140.215.138 ansible_ssh_private_key_file=~/key.pem hostname=sbsnewstagdeploy1 my_ip=10.140.215.138 extra_arg=''
-10.140.215.142 ansible_ssh_private_key_file=~/key.pem hostname=sbsnewstagspare4 my_ip=10.140.215.142 extra_arg=''
+10.140.215.140 ansible_ssh_private_key_file=~/key.pem hostname=sbsnewstagspare2 my_ip=10.140.215.140 extra_arg=--wsrep-new-cluster keepalived_priority=150 
+10.140.215.141 ansible_ssh_private_key_file=~/key.pem hostname=sbsnewstagspare3 my_ip=10.140.215.141 extra_arg='' keepalived_priority=120
+10.140.215.142 ansible_ssh_private_key_file=~/key.pem hostname=sbsnewstagspare4 my_ip=10.140.215.142 extra_arg='' keepalived_priority=100
 
 ### one of the ceph nodes
 [cephNode]
