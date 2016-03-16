@@ -4,7 +4,7 @@
     - vars/cinder_info.yml
   tasks:
     - name: Add volume vip host
-      lineinfile: dest=/etc/hosts line="{{keepalived_haproxy_vip}} {{vol_vip_host}}" state=present
+      lineinfile: dest=/etc/hosts line="{{keepalived_vol_vip}} {{vol_vip_host}}" state=present
       become: yes
     - name: Copy cinder conf
       template: src=src/cinder/cinder.conf dest=/etc/cinder/cinder.conf

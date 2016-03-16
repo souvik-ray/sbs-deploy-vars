@@ -1,0 +1,7 @@
+---
+- include: ceph/purge_cluster.yaml
+- include: galera/clean.yaml
+- include: haproxy/service-state.yaml operation=stopped
+- include: keepalived/service-state.yaml operation=stopped
+- include: zeromq/service-state.yaml operation=stopped
+- include: cinder/service-state.yaml operation=stopped

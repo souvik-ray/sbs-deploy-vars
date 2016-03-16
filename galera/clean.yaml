@@ -1,13 +1,15 @@
 ---
+- include: service_state.yaml operation=stopped
 - hosts: hostList
-  vars_files:
-    - vars/proxy_info.yml
   tasks:
-    - include: service-state.yaml operation=stopped
     - name: Swap off
       shell: swapoff /swapfile
       become: yes
     - name: Remove /swapfile
       shell: rm -rf /swapfile
       become: yes
+    - name: purge
+      shell: sudo apt-get purge -y
+    - name: Remove galera apt
+      shell: sudo apt-get remove galera-3 galera-arbitrator-3 -y
 

@@ -38,6 +38,6 @@
       apt: name=python-rbd state=installed
       become: yes
     - name: Install cinder ec2
-      shell: sudo apt-get install python-cinder-ec2-api
+      shell: sudo apt-get install -y --force-yes python-cinder-ec2-api
 
 
