@@ -1,0 +1,7 @@
+---
+- hosts: hostList
+  tasks:
+    - name: Run volume on 1 node
+      shell: sudo service cinder-volume {{operation}}
+      become: yes
+      run_once: true
