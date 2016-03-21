@@ -1,0 +1,15 @@
+### Cinder nodes list
+[hostList]
+10.140.211.131 ansible_ssh_private_key_file=~/key.pem hostname=sbsep1 my_ip=10.140.211.131 extra_arg=--wsrep-new-cluster keepalived_priority=150
+10.140.211.132 ansible_ssh_private_key_file=~/key.pem hostname=sbsep2 my_ip=10.140.211.132 extra_arg='' keepalived_priority=120
+10.140.211.133 ansible_ssh_private_key_file=~/key.pem hostname=sbsep3 my_ip=10.140.211.133 extra_arg='' keepalived_priority=100
+
+
+### Ceph cluster nodes
+[admin]
+10.140.211.134 ansible_ssh_private_key_file=~/key.pem
+
+[nodes]
+10.140.211.131 ansible_ssh_private_key_file=~/key.pem
+10.140.211.132 ansible_ssh_private_key_file=~/key.pem
+10.140.211.133 ansible_ssh_private_key_file=~/key.pem
