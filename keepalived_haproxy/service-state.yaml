@@ -1,5 +1,5 @@
 ---
-- hosts: cvolHostList
+- hosts: haproxyHostList
   tasks:
     - name: Service keepalived
       service: name=keepalived state={{ operation }}
