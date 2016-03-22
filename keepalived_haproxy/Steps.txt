@@ -1,0 +1,2 @@
+1. Specify the required variables in keepalived_info.yml (self-explanatory) and it deploy on IPs in [haproxyHostList] in vars/inventory file.
+2. ansible-playbook -v deploy_keepalived.yaml -i vars/inventory -u block_team

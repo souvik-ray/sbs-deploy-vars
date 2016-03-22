@@ -1,0 +1,21 @@
+---
+- hosts: cvolHostList
+  vars_files: 
+    - vars/keepalived_info.yml
+  tasks:
+    - name: Configure keepalived
+      template: src=src/keepalived_c-vol.conf dest=/etc/keepalived/keepalived.conf
+      become: yes
+    - name: Configure keepalivedtrack
+      template: src=src/keepalivedtrack.sh dest=/usr/local/bin/
+      become: yes
+    - name: Set Permissions for keepalivedtrack
+      shell: chmod +x /usr/local/bin/keepalivedtrack.sh
+      become: yes
+    - name: Configure keepalivednotify
+      template: src=src/keepalivednotify.sh dest=/usr/local/bin/
+      become: yes
+    - name: Set Permissions
+      shell: chmod +x /usr/local/bin/keepalivednotify.sh
+      become: yes
+

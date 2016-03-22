@@ -1,0 +1,21 @@
+1. For deploying keepalived, modify "./inventory" file to specify the hosts as per your requirements. For example, I have added host as 54.201.178.145 with its private key.
+
+2. Deploy keepalived
+   -- use deploy-package.yaml playlist which executes the following steps on host node:
+	1)add "net.ipv4.ip_nonlocal_bind=1" to /etc/sysctl.conf
+	2)sudo sysctl -p
+	3)sudo apt-get install keepalived
+        4)sudo update-rc.d keepalived defaults
+   -- Commands used to run this play-list
+	ansible-playbook -v deploy-package.yaml -i inventory -u ubuntu
+
+3. Deploy and apply config
+  	ansible-playbook -v apply-config.yaml -i inventory -u ubuntu
+  
+4. Service start/stop.
+   -- I have created service-state.yaml playlist to start/stop/status/restart keepalived service, in this we have to define the operation else it will start keepalived by default
+	ansible-playbook -v service-state.yaml -i inventory -u ubuntu -e operation=started
+	ansible-playbook -v service-state.yaml -i inventory -u ubuntu -e operation=stopped
+	ansible-playbook -v service-state.yaml -i inventory -u ubuntu -e operation=restarted
+	ansible-playbook -v service-state.yaml -i inventory -u ubuntu -e operation=status
+

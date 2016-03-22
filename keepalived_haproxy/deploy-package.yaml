@@ -1,0 +1,17 @@
+---
+- hosts: haproxyHostList
+  tasks:
+    - name: Allow binding to ips that are not assigned to a network interface
+      lineinfile: dest=/etc/sysctl.conf state=present regexp='^net\.ipv4\.ip_nonlocal_bind\=' line='net.ipv4.ip_nonlocal_bind=1'
+      become: yes
+    - name: Read values from file
+      command: sysctl -p
+      become: yes
+    - name: apt update
+      shell: sudo apt-get update
+    - name: Ensure keepalived is installed
+      apt: name=keepalived state=installed
+      become: yes
+    - name: Set defaults in keepalived
+      command: update-rc.d keepalived defaults
+      become: yes

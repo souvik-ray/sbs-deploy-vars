@@ -1,0 +1,6 @@
+---
+- hosts: cvolHostList
+  tasks:
+    - name: Service keepalived
+      service: name=keepalived state={{ operation }}
+      become: yes

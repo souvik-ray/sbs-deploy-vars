@@ -1,0 +1,9 @@
+---
+- hosts: haproxyHostList
+  vars_files: 
+    - vars/keepalived_info.yml
+  tasks:
+    - name: Configure keepalived
+      template: src=src/keepalived_haproxy.conf dest=/etc/keepalived/keepalived.conf
+      become: yes
+
