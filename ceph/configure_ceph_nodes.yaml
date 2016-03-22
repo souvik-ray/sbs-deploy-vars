@@ -49,3 +49,7 @@
    
     - name: Set up git
       shell: git config --global url."https://".insteadOf git://
+    - name: Increase threads-max limit
+      shell: sudo sysctl -w kernel.threads-max=4194303
+    - name: Increase allowed pid_max value
+      shell: sudo sysctl -w kernel.pid_max=4194303
