@@ -1,0 +1,15 @@
+### Cinder nodes list
+[hostList]
+10.140.211.125 ansible_ssh_private_key_file=~/key.pem hostname=sbscindervol1 my_ip=10.140.211.125
+10.140.211.126 ansible_ssh_private_key_file=~/key.pem hostname=sbscindervol2 my_ip=10.140.211.126
+10.140.211.127 ansible_ssh_private_key_file=~/key.pem hostname=sbscindervol3 my_ip=10.140.211.127
+
+
+### Ceph cluster nodes
+[admin]
+10.140.211.134 ansible_ssh_private_key_file=~/key.pem
+
+[nodes]
+10.140.211.125 ansible_ssh_private_key_file=~/key.pem
+10.140.211.126 ansible_ssh_private_key_file=~/key.pem
+10.140.211.127 ansible_ssh_private_key_file=~/key.pem
