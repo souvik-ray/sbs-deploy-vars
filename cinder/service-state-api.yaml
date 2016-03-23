@@ -1,0 +1,9 @@
+---
+- hosts: hostList
+  tasks:
+    - name: Services cinder
+      shell: sudo service {{item}} {{ operation }}
+      become: yes
+      with_items: 
+        - cinder-api
+        - cinder-scheduler
