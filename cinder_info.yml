@@ -28,3 +28,4 @@ zmq_port: 50245
 mons: [{hostname: 'sbsnewstagmon1', privateIp: '10.140.215.131'}, {hostname: 'sbsnewstagmon2', privateIp: '10.140.215.132'}, {hostname: 'sbsnewstagmon3', privateIp: '10.140.215.133'}]
 cer_files: 'ca-certificates'
 vol_vip_host: 'sbsvolviphost'
+rbd_tpool_size: 64
