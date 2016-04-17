@@ -1,18 +1,18 @@
-1. For deploying supervisor, modify "./inventory" file to specify the hosts as per your requirements.
+1. For deploying supervisor, modify "./inventory_supervisord" file to specify the hosts as per your requirements.
 
 2. Deploy supervisor
    -- use deploy-package.yaml playlist which executes the following steps on host node:
 	1)sudo apt-get install supervisor
    -- Commands used to run this play-list
-	ansible-playbook -v deploy-package.yaml -i inventory -u ubuntu
+	ansible-playbook -v deploy-package.yaml -i vars/inventory_supervisord -u ubuntu
 
 3. Deploy and apply config
-  	ansible-playbook -v apply-config.yaml -i inventory -u ubuntu
+  	ansible-playbook -v apply-config.yaml -i vars/inventory_supervisord -u ubuntu
   
 4. Service start/stop.
    -- I have created service-state.yaml playlist to start/stop/status/restart supervisor service, in this we have to define the operation as started/stopped/restarted/status:
 
-	ansible-playbook -v service-state.yaml -i inventory -u ubuntu -e operation=started
-	ansible-playbook -v service-state.yaml -i inventory -u ubuntu -e operation=stopped
-	ansible-playbook -v service-state.yaml -i inventory -u ubuntu -e operation=restarted
-	ansible-playbook -v service-state.yaml -i inventory -u ubuntu -e operation=status
+	ansible-playbook -v service-state.yaml -i vars/inventory_supervisord -u ubuntu -e operation=started
+	ansible-playbook -v service-state.yaml -i vars/inventory_supervisord -u ubuntu -e operation=stopped
+	ansible-playbook -v service-state.yaml -i vars/inventory_supervisord -u ubuntu -e operation=restarted
+	ansible-playbook -v service-state.yaml -i vars/inventory_supervisord -u ubuntu -e operation=status

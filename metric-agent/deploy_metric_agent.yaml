@@ -1,0 +1,11 @@
+---
+- hosts: metric-agent-hostlist
+
+  tasks:
+    - name: Fetch metric-agent
+      get_url: url=http://10.140.221.229/apt/souvik-ray/souvik-ray/pool/main/m/metricagent/python-metricagent_0.1+11_amd64.deb dest=/tmp/ mode=0666
+      become: yes
+
+    - name: Dpkg metric agent
+      shell: sudo dpkg -i /tmp/python-metricagent_0.1+11_amd64.deb
+      become: yes

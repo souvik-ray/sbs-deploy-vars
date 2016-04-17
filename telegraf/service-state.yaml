@@ -1,6 +1,6 @@
 ---
-- hosts: supervisord-hostList
+- hosts: telegraf-hostlist
   tasks:
-    - name: Service supervisor
-      service: name=supervisor state={{ operation }}
+    - name: Service telegraf
+      service: name=telegraf state={{ operation }}
       become: yes

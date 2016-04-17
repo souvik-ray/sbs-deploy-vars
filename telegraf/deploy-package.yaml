@@ -6,9 +6,9 @@
 
   tasks:
     - name: Copy telegraf
-      template: src=telegraf-src/telegraf_0.11.1-1_amd64.deb dest=/tmp/telegraf_0.11.1-1_amd64.deb
+      template: src=telegraf-src/telegraf_0.11.1-1_amd64.deb dest=/tmp/
       become: yes
 
     - name: Dpkg telegraf
-      shell: sudo dpkg -i telegraf_0.11.1-1_amd64.deb
+      shell: sudo dpkg -i /tmp/telegraf_0.11.1-1_amd64.deb
       become: yes

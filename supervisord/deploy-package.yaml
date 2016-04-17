@@ -3,7 +3,7 @@
 
   vars_files:
     - vars/proxy_info.yml
-    - vars/supervisor.yml
+    - vars/supervisord.yml
 
   vars:
     proxy_env:

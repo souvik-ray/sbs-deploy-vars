@@ -60,3 +60,19 @@ Individual service deployment:
 		c. Run to deploy cinder:
 		   ansible-playbook -v deploy_cinder.yaml -i vars/inventory -u block_team
 
+    6. Deploy metrics Packages.
+        a. “git clone” the following in that directory:
+	        https://github.com/JioCloud/sbs-telegraf/
+        b. Manually scp sbs-telegraf/telegraf_0.11.1-1_amd64.deb to all the cinder-api, cinder-volume and cinder-backup hosts.
+            scp -i ~/key.pem sbs-telegraf/telegraf_0.11.1-1_amd64.deb block-user@<cinder-host>:/tmp
+        c. Install telegraf
+            i) Specify the required variables in vars/telegraf.yml (self-explanatory)
+            ii) Change the vars/inventory_telegraf file to update the hostlist
+            iii) ansible-playbook -v telegraf/deploy_telegraf.yaml -i telegraf/vars/inventory_telegraf -u block_team
+        d. Install metric-agent
+            i) Change the vars/inventory_metric_agent file to update the hostlist
+            ii) ansible-playbook -v metric-agent/deploy_metric_agent.yaml -i metric-agent/vars/inventory_metric_agent -u block_team
+        e. Install supervisord
+            i) Specify the required variables in vars/telegraf.yml (self-explanatory)
+            ii) Change the vars/inventory_telegraf file to update the hostlist
+            iii) ansible-playbook -v supervisord/deploy_supervisor.yaml -i supervisord/vars/inventory_supervisor -u block_team
