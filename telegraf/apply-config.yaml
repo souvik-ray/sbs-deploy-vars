@@ -1,0 +1,9 @@
+---
+- hosts: telegraf-hostlist
+  vars_files: 
+    - vars/telegraf.yml
+  tasks:
+    - name: Configure supervisor
+      template: src=src/telegraf.conf dest=/etc/telegraf/telegraf.conf
+      become: yes
+

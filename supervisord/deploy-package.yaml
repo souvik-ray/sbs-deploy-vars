@@ -1,0 +1,16 @@
+---
+- hosts: supervisor-hostlist
+
+  vars_files:
+    - vars/proxy_info.yml
+    - vars/supervisor.yml
+
+  vars:
+    proxy_env:
+      http_proxy: http://{proxy_ip}:{proxy_port}
+
+  tasks:
+    - name: Install Supervisor
+      apt: pkg=supervisor state=installed update_cache=true
+      environment: "{{proxy_env}}"
+      become: yes

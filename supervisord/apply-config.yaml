@@ -1,0 +1,9 @@
+---
+- hosts: supervisor-hostlist
+  vars_files: 
+    - vars/supervisord.yml
+  tasks:
+    - name: Configure supervisor
+      template: src=src/supervisord.conf dest=/etc/supervisor/supervisord.conf
+      become: yes
+
