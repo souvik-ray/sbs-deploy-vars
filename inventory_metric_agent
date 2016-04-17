@@ -1,0 +1,12 @@
+### Cinder nodes list
+[metric-agent-hostlist]
+10.140.211.125 ansible_ssh_private_key_file=~/key.pem hostname=sbscindervol1 my_ip=10.140.211.125
+10.140.211.126 ansible_ssh_private_key_file=~/key.pem hostname=sbscindervol2 my_ip=10.140.211.126
+10.140.211.127 ansible_ssh_private_key_file=~/key.pem hostname=sbscindervol3 my_ip=10.140.211.127
+10.140.211.128 ansible_ssh_private_key_file=~/key.pem hostname=sbscinderbkp1 my_ip=10.140.211.128
+10.140.211.129 ansible_ssh_private_key_file=~/key.pem hostname=sbscinderbkp2 my_ip=10.140.211.129
+10.140.211.130 ansible_ssh_private_key_file=~/key.pem hostname=sbscinderbkp3 my_ip=10.140.211.130
+10.140.211.131 ansible_ssh_private_key_file=~/key.pem hostname=sbsep1 my_ip=10.140.211.131
+10.140.211.132 ansible_ssh_private_key_file=~/key.pem hostname=sbsep2 my_ip=10.140.211.132
+10.140.211.133 ansible_ssh_private_key_file=~/key.pem hostname=sbsep3 my_ip=10.140.211.133
+
