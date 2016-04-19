@@ -1,3 +1,3 @@
 1. Specify the required variables in telegraf.yml (self-explanatory) and it deploys on IPs in [telegraf-hostlist] in inventory file.
 
-	ansible-playbook -v deploy-metric-agent.yaml -i inventory_metric_agent -u block-team
+	ansible-playbook -v deploy_metric_agent.yaml -i vars/inventory_metric_agent -u block-team

@@ -1,5 +1,5 @@
 ---
-- hosts: supervisord-hostlist
+- hosts: supervisor-hostlist
   tasks:
     - name: Service supervisor
       service: name=supervisor state={{ operation }}

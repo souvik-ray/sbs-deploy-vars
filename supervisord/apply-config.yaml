@@ -3,6 +3,11 @@
   vars_files: 
     - vars/supervisord.yml
   tasks:
+    - name: Make supervisor config directory
+      command: mkdir /etc/supervisor
+      become: yes
+      ignore_errors: True
+
     - name: Configure supervisor
       template: src=src/supervisord.conf dest=/etc/supervisor/supervisord.conf
       become: yes

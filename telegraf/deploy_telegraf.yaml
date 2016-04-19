@@ -1,4 +1,4 @@
 ---
 - include: deploy-package.yaml
 - include: apply-config.yaml
-- include: service-state.yaml operation=started
+- include: service-state.yaml operation=stopped

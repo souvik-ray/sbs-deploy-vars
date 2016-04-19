@@ -5,9 +5,10 @@
     - vars/telegraf.yml
 
   tasks:
-    - name: Copy telegraf
-      template: src=telegraf-src/telegraf_0.11.1-1_amd64.deb dest=/tmp/
-      become: yes
+#    Uncommenting this as this does not work
+#    - name: Copy telegraf
+#      template: src=telegraf-src/telegraf_0.11.1-1_amd64.deb dest=/tmp/
+#      become: yes
 
     - name: Dpkg telegraf
       shell: sudo dpkg -i /tmp/telegraf_0.11.1-1_amd64.deb
