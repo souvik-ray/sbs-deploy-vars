@@ -1,0 +1,9 @@
+1. For deploying supervisor, modify "./inventory-metric-agent" file to specify the hosts as per your requirements.
+
+2. Deploy supervisor
+   -- use deploy-package.yaml playlist which executes the following steps on host node:
+	1)wget http://10.140.221.229/apt/souvik-ray/souvik-ray/pool/main/m/metricagent/python-metricagent_0.1+11_amd64.deb /tmp/
+	2)sudo dpkg -i python-metricagent_0.1+11_amd64.deb
+   -- Commands used to run this play-list
+	ansible-playbook -v deploy-metric-agent.yaml -i vars/inventory_metric_agent -u block-team
+

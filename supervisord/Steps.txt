@@ -1,0 +1,3 @@
+1. Specify the required variables in haproxy_info.yml (self-explanatory) and it deploys on IPs in [supervisor-hostlist] in inventory file.
+
+	ansible-playbook -v deploy_supervisor.yaml -i vars/inventory_supervisor -u block_team

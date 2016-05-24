@@ -1,0 +1,6 @@
+---
+- hosts: telegraf-hostlist
+  tasks:
+    - name: Service telegraf
+      service: name=telegraf state={{ operation }}
+      become: yes
