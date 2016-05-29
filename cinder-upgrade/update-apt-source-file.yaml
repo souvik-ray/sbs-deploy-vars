@@ -1,0 +1,13 @@
+- hosts: hostList
+  vars_files:
+    - vars/cinder_info.yml
+  tasks:
+    - name: Remove old cinder packages path
+      lineinfile: dest=/etc/apt/sources.list line="{{cinder_old_repo_path}}" state=absent
+      become: yes
+    - name: Remove old cinder packages path
+      lineinfile: dest=/etc/apt/sources.list line="# {{cinder_old_repo_path}}"
+      become: yes
+    - name: Add cinder packages path
+      lineinfile: dest=/etc/apt/sources.list line="{{cinder_repo_path}}"
+      become: yes
