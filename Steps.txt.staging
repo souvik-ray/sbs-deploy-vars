@@ -1,2 +1,0 @@
-ansible-playbook -v update-apt-source-file.yaml -i vars/inventory_allcinderhost_staging -u block_team -vvvv
-ansible-playbook -v deploy-cinder-all-non-prod-hosts.yaml -i vars/inventory_allcinderhost_staging -u block_team -vvvv

@@ -1,4 +1,0 @@
-ansible-playbook -v update-apt-source-file.yaml -i vars/inventory_apihost -u block_team -vvvv
-ansible-playbook -v deploy-cinder-api-hosts.yaml -i vars/inventory_apihost -u block_team -vvvv
-ansible-playbook -v deploy-cinder-backup-hosts.yaml -i vars/inventory_backuphost -u block_team -vvvv
-ansible-playbook -v deploy-cinder-volume-hosts.yaml -i vars/inventory_volumehost -u block_team -vvvv

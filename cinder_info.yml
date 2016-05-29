@@ -1,0 +1,32 @@
+ceph_deb_version: 'http://ceph.com/debian-hammer/'
+cinder_repo_path: 'deb [arch=amd64 trusted=yes] http://10.140.221.229/snapshots/3fb76058-4b97-4bf9-bb99-e5ab24610f45/10.140.221.229/apt/jcssbs/jcssbs/ jiocloud main'
+cinder_old_repo_path: 'deb [arch=amd64 trusted=yes] http://10.140.221.229/snapshots/4cbdd07c-a6e8-46ec-a1df-7d4dcd840601/10.140.221.229/apt/jcssbs/jcssbs/ jiocloud main'
+access_key: 'cecda7a3de6d4eb997460d1524135967'
+secret_key: '6544313324fe4b20991d77e3481a8446'
+dss_endpoint: 'dss.ind-west-1.staging.jiocloudservices.com'
+bucket_name: 'sbs-backups-container'
+glance_endpoint: 'https://compute.ind-west-1.staging.deprecated.jiocloudservices.com:9292'
+glance_cerfile: '/usr/local/share/ca-certificates/compute.ind-west-1.staging.deprecated.jiocloudservices.com.crt'
+auth_port: 35357
+admin_user: 'sbs_service_user'
+admin_password: 'ca1378d8ae76505eb98109953642b471'
+iam_endpoint: 'iam.ind-west-1.staging.jiocloudservices.com'
+tenant_name: 'services'
+iam_identity_uri: 'https://{{iam_endpoint}}'
+iam_auth_uri: 'https://{{iam_endpoint}}/v3'
+keepalived_haproxy_vip: '10.140.215.188'
+keepalived_vol_vip: '10.140.215.190'
+mysql_connection_string: 'mysql://root:test123@{{keepalived_haproxy_vip}}:33306/cinder'
+mysql_user: 'root'
+mysql_passwd: 'test123'
+secret_uuid: 'a4eabc75-43f7-4313-aefd-eb5fe6be635a'
+auth_version: v3
+cluster_fsid: 'd419e8eb-27be-4d29-9d56-652c257d8f68'
+cinder_dir: 'v1.07'
+cinder_ec2_dir: 'cinder-ec2-dir'
+clients_dir: 'clients-dir'
+zmq_port: 50245
+mons: [{hostname: 'sbsnewstagmon1', privateIp: '10.140.215.131'}, {hostname: 'sbsnewstagmon2', privateIp: '10.140.215.132'}, {hostname: 'sbsnewstagmon3', privateIp: '10.140.215.133'}]
+cer_files: 'ca-certificates'
+vol_vip_host: 'sbsvolviphost'
+rbd_tpool_size: 64
